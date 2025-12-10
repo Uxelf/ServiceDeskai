@@ -24,9 +24,9 @@ connectDB().then(() => {
 });
 
 
-/* 
+ 
 //This is just for testing 
-import bcrypt from "bcrypt";
+/* import bcrypt from "bcrypt";
 async function hash() {
   const pass = await bcrypt.hash("admin", 10);
   console.log(pass);
