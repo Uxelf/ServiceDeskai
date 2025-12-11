@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+@theme {
+    --color-app-primary: #252422;
+    --color-app-secondary: #403D39;
+    --color-app-background: #FFFCF2;
+    --color-app-background-secondary: #CCC5B9;
+    --color-app-highlight: #EB5E28;
+}
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+
+    --color-app-primary: #252422;
+    --color-app-secondary: #403D39;
+    --color-app-background: #FFFCF2;
+    --color-app-background-secondary: #CCC5B9;
+    --color-app-highlight: #EB5E28;
+
+}
+
+html.dark {
+    --color-app-primary: #FFFCF2;
+    --color-app-secondary: #CCC5B9;
+    --color-app-background: #252422;
+    --color-app-background-secondary: #403D39;
+    --color-app-highlight: #EB5E28;
+}
+
+body {
+    background: var(--color-app-background);
+    color: var(--color-app-primary);
+}

@@ -6,7 +6,7 @@ services:
       - 5173:5173
     volumes:
       - ./front:/app
-      - front-v-node-modules:/node_modules
+      - front-v-node-modules:/app/node_modules
 
   back:
     build: ./back
@@ -17,7 +17,7 @@ services:
       - 3000:3000
     volumes:
       - ./back:/app
-      - server-v-node-modules:/node_modules
+      - server-v-node-modules:/app/node_modules
 
   mongo:
     build: ./db
@@ -31,4 +31,4 @@ volumes:
   server-v-node-modules:
     name: "server-v-node-modules"
   database-v:
-    name: "databse-v"
+    name: "database-v"
