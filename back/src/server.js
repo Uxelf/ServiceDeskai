@@ -5,11 +5,13 @@ import usersRoutes from './users/users.routes.js'
 import officesRoutes from './offices/offices.routes.js'
 import authRoutes from './auth/auth.routes.js'
 import cookieParser from "cookie-parser";
+import cors from "cors"
 
 
 const app = express()
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({origin: "*"}));
 const port = 3000;
 
 app.use("/api/tickets", ticketsRoutes);

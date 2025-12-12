@@ -1,9 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Office } from "../../types/Office";
 
 interface UserState {
     name?: string;
     role?: string;
     token?: string;
+    prefferedOffice?: Office;
 }
 
 const initialState: UserState = {};

@@ -22,7 +22,7 @@ export default function FormInput({
   return (
     <div className="flex flex-col mb-4">
       {label && 
-      <label className="mb-1 font-semibold ">{label}</label>}
+      <label className="mb-1 font-semibold">{label}</label>}
 
       <div className="">
         <input

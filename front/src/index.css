@@ -33,3 +33,11 @@ body {
     background: var(--color-app-background);
     color: var(--color-app-primary);
 }
+
+h1 {
+    @apply text-2xl font-semibold;
+}
+
+select option:hover {
+    @apply bg-app-secondary;
+}

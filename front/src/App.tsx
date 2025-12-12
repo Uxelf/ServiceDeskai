@@ -6,6 +6,7 @@ import TicketsList from "./pages/protected/ticketsList/TicketsList";
 import ProtectedLayout from "./pages/protected/ProtectedLayout";
 import type { RootState } from "./store/store";
 import { useSelector } from "react-redux";
+import UploadPage from "./pages/protected/upload/UploadPage";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
         <Route path="/tickets" element={<TicketsList />} />
+        <Route path="/upload" element={<UploadPage />} />
       </Route>
       <Route path="/" element={<TicketsList/>} />
     </Routes>
