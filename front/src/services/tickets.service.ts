@@ -1,7 +1,22 @@
 import axios from "axios";
-import { type Ticket } from "../types/ticket.types";
+import { type UploadTicketResponse, type Ticket } from "../types/ticket.types";
 import api from "./api";
 
+
+export async function uploadTicketApi(formData: FormData) {
+    console.log("Enviando ticket");
+    try {
+        const response = await api.post<UploadTicketResponse>('/tickets', formData);
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(
+                error.response?.data?.message || "Error uploading ticket"
+            );
+        }
+        throw new Error("Unexpected error");
+    }
+}
 
 export async function getTicketsApi() {
     try {

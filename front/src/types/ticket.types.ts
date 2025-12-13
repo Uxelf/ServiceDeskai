@@ -10,8 +10,17 @@ export interface Ticket {
     office: string,
     title: string,
     description: string,
-    imageUrl: string,
     author?: string,
     assigned?: string,
+    imageUrl?: string,
     chats?: Message[]
+}
+
+export interface UploadTicketRequest {
+    office: string;
+    image: File | null;
+}
+
+export interface UploadTicketResponse {
+    message: string,
 }

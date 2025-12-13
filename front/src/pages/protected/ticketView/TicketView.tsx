@@ -8,12 +8,16 @@ import type { RootState } from "../../../store/store";
 import Button from "../../../components/Button";
 import TicketChatHistory from "./TicketChatHistory";
 import TicketAddMessage from "./TicketAddMessage";
+import type { Office } from "../../../types/office.types";
+import { getOffices } from "../../../services/offices.service";
 
 export default function TicketView(){
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const userRole = useSelector((state: RootState) => state.auth.user?.role);
+  const [offices, setOffices] = useState<Office[]>([]);
+  const [ticketOfficeName, setTicketOfficeName] = useState<string>("");
 
   const { id } = useParams<{ id: string }>();
 
@@ -27,9 +31,21 @@ export default function TicketView(){
     getTicketByIdApi(id)
     .then(data => {
       setTicket(data)
-    }).
-    then(_ => {setLoading(false)})
+    });
+
+    getOffices()
+    .then((data) => setOffices(data))
+    .catch((err) => setError(err.message));
   }, [id]);
+
+  useEffect(() => {
+    if (ticket && offices){
+      setLoading(false);
+      const office = offices.find((office) => office._id == ticket.office);
+      if (office)
+        setTicketOfficeName(office?.name);
+    }
+  }, [ticket, offices])
 
   const statusClasses: Record<string, string> = {
         "open": "text-app-primary",
@@ -54,7 +70,7 @@ export default function TicketView(){
         <h1>Ticket - {ticket.title}</h1>
         <h2 className="">id: {ticket._id}</h2>
       </div>
-      <div className="flex-1 border relative">
+      <div className="flex-1 relative">
         <div className="flex flex-col h-full gap-4 p-2 overflow-auto absolute inset-0">
           <div>
             <h3>Status</h3>
@@ -62,7 +78,7 @@ export default function TicketView(){
           </div>
           <div>
             <h3>Office</h3>
-            <div>{ticket.office}</div>
+            <div>{ticketOfficeName}</div>
           </div>
           {userRole === "admin" &&
             <>
@@ -80,9 +96,9 @@ export default function TicketView(){
             <h3>Description</h3>
             <div>{ticket.description}</div>
           </div>
-          <div>
+          <div className="mx-auto">
             <img
-              src={ticket.imageUrl}
+              src={`/ticketImages/${ticket.imageUrl}`}
               alt="Preview"
               className="max-w-full max-h-full object-cover rounded border border-app-background-secondary"
             />

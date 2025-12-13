@@ -6,6 +6,7 @@ services:
       - 5173:5173
     volumes:
       - ./front:/app
+      - ./ticketsImages:/app/public/ticketImages
       - front-v-node-modules:/app/node_modules
 
   back:
@@ -17,6 +18,7 @@ services:
       - 3000:3000
     volumes:
       - ./back:/app
+      - ./ticketsImages:/app/public/ticketImages
       - server-v-node-modules:/app/node_modules
 
   mongo:

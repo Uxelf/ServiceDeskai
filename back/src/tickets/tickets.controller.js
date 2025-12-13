@@ -2,11 +2,14 @@ import { ObjectId } from "mongodb";
 import { db } from "../db.js";
 import { officesCollection } from "../offices/offices.controller.js";
 import { usersCollection } from "../users/users.controller.js";
+import fs from "fs";
+import path from "path";
+import { describeImageWithPollinations } from "./descriptionGenerator.js";
 
 export const ticketsCollection = "tickets";
 export async function createTicket(req, res) {
     try {
-        const office = await db.collection(officesCollection).findOne({name: req.body.office});
+        const office = await db.collection(officesCollection).findOne({_id: new ObjectId(req.body.office)});
         if (!office){
             res.status(400).json({error: "Office not found"});
             return;
@@ -17,7 +20,26 @@ export async function createTicket(req, res) {
             status: "open",
             createdAt: new Date()
         });
-        console.log(req.user.username);
+        
+        const ticketId = result.insertedId.toString();
+
+        if (req.file) {
+            const baseDir = "/app/public/ticketImages";
+            const ext = path.extname(req.file.originalname);
+            const filename = `${ticketId}${ext}`;
+
+            const imagePath = path.join(baseDir, filename);
+
+            fs.writeFileSync(imagePath, req.file.buffer);
+
+            const description = await describeImageWithPollinations(req.file.buffer);
+
+            await db.collection(ticketsCollection).updateOne(
+                { _id: result.insertedId },
+                { $set: { ...description, imageUrl: filename } }
+            );
+        }
+
         res.status(201).json({ id: result.insertedId });
     } catch (err) {
         res.status(500).json({ error: "Error creating ticket" });

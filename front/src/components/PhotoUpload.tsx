@@ -38,13 +38,14 @@ export default function PhotoUpload({ name, onFileSelect }: Props){
         onChange={handleFileChange}
         className="hidden"
       />
-      {preview && (
-        <img
-          src={preview}
-          alt="Preview"
-          className="max-w-full max-h-full object-cover rounded border border-app-background-secondary"
-        />
-      )}
+      <div className="flex-1 w-full relative">
+        {preview && (
+          <img
+            src={preview}
+            className="absolute inset-0 max-w-full max-h-full mx-auto"
+          />
+        )}
+      </div>
     </div>
   );
 };

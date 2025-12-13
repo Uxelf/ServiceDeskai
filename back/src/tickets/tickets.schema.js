@@ -1,10 +1,8 @@
 import { z } from "zod";
 
 export const ticketSchema = z.object({
-    title: z.string().min(4, "Title required"),
-    description: z.string().min(4, "Description required"),
     office: z.string().min(1, "Office required"),
-    // Imagen
+    image: z.any()
 }).strict();
 
 export const updateTicketStatusSchema = z.object({
