@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import ThemeProvider from "./components/ThemeProvider";
 import TicketsList from "./pages/protected/ticketsList/TicketsList";
@@ -10,8 +10,8 @@ import UploadPage from "./pages/protected/upload/UploadPage";
 
 function App() {
 
-  const token = useSelector((state: RootState) => state.user.token);
-  const isAuthenticated = !!!token;
+  const token = useSelector((state: RootState) => state.auth.user);
+  const isAuthenticated = !!token;
 
   return (
     <>
@@ -22,7 +22,7 @@ function App() {
         <Route path="/tickets" element={<TicketsList />} />
         <Route path="/upload" element={<UploadPage />} />
       </Route>
-      <Route path="/" element={<TicketsList/>} />
+      <Route path="/" element={<Navigate to="/tickets" replace/>} />
     </Routes>
     </>
   );

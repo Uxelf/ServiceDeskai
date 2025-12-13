@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import TicketCard from "./TicketCard";
-import type { Ticket } from "../../../types/Ticket";
+import type { Ticket } from "../../../types/ticket.types";
 
 export default function TicketsList(){
 

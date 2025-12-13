@@ -11,7 +11,7 @@ import cors from "cors"
 const app = express()
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: "*"}));
+app.use(cors({origin: "http://localhost:5173", credentials: true,}));
 const port = 3000;
 
 app.use("/api/tickets", ticketsRoutes);

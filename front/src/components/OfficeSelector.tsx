@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Office } from "../types/Office";
-import { fetchOffices } from "../services/officesService";
+import type { Office } from "../types/office.types";
+import { fetchOffices } from "../services/offices.service";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 

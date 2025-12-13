@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createTicket, getOfficeTickets, getTickets, getUserTickets, updateTicketStatus } from "./tickets.controller.js";
+import { createTicket, getOfficeTickets, getTicketById, getTickets, getUserTickets, updateTicketStatus } from "./tickets.controller.js";
 import { validate } from "../validation/validate.js";
 import { ticketSchema, updateTicketStatusSchema } from "./tickets.schema.js";
 import { requireAuth, requireDeskRole, requireStandardRole } from "../auth/auth.js";
@@ -9,6 +9,7 @@ import { requireAuth, requireDeskRole, requireStandardRole } from "../auth/auth.
 const router = Router();
 
 router.get("/", getTickets);
+router.get("/:id", getTicketById);
 router.get("/my-tickets", requireAuth, requireStandardRole, getUserTickets);
 router.get("/office", requireAuth, requireDeskRole, getOfficeTickets);
 router.post("/", requireAuth, requireStandardRole, validate(ticketSchema), createTicket);

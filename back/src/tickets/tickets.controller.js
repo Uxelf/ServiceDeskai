@@ -33,6 +33,29 @@ export async function getTickets(req, res) {
     }
 }
 
+export async function getTicketById(req, res) {
+  try {
+    const { id } = req.params;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid id" });
+    }
+
+    const ticket = await db.collection(ticketsCollection).findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!ticket) {
+      return res.status(404).json({ error: "Ticket not found" });
+    }
+
+    res.json(ticket);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error fetching ticket" });
+  }
+}
+
 export async function getUserTickets(req, res) {
     try {
         const tickets = await db.collection(ticketsCollection)

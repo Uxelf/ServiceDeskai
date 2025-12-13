@@ -1,31 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
 import Button from "../../components/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { type AppDispatch, type RootState } from "../../store/store";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../store/slices/authSlice";
 
 export default function LoginForm(){
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const {user, loading, error} = useSelector(
+        (state: RootState) => state.auth
+    )
+    
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({ username: "", password: "" });
+    const [manualError, setManualError] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
-        // Validación simple
-        const newErrors = { username: "", password: "" };
-        if (!password) newErrors.password = "La contraseña es obligatoria";
-
-        setErrors(newErrors);
-
-        if (!newErrors.username && !newErrors.password) {
-        // Aquí iría la lógica real de login
-            console.log("Login:", { username, password });
+        if (!username && !password){
+            setManualError("Enter something");
+            return;
         }
+        setManualError("");
+        dispatch(login({ username, password }));
     };
+
+    useEffect(() => {
+        if (user) {
+            navigate("/tickets");
+        }
+    }, [user, navigate]);
 
     return (
         <form
             onSubmit={handleSubmit}
-            className="max-w-md m-auto p-8 flex flex-col">
+            className="max-w-md m-auto p-8 flex flex-col relative">
                 <h1 className="w-full text-center text-2xl font-semibold mb-6">Log in</h1>
                 <FormInput
                     label="Username"
@@ -33,7 +45,6 @@ export default function LoginForm(){
                     value={username}
                     placeholder="username"
                     onChange={setUsername}
-                    error={errors.username}
                 />
                 <FormInput
                     label="Password"
@@ -41,9 +52,9 @@ export default function LoginForm(){
                     value={password}
                     placeholder="password"
                     onChange={setPassword}
-                    error={errors.password}
                 />
-                <Button className="mx-auto">Log in</Button>
+                <Button className="mx-auto" disabled={loading}>Log in</Button>
+                {(error || manualError) && <p className="absolute w-full bottom-0 left-0 text-center mt-2 text-red-600">{error? error : manualError}</p>}
             </form>
     )
 }
