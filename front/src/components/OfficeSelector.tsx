@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Office } from "../types/office.types";
-import { fetchOffices } from "../services/offices.service";
+import { getOffices } from "../services/offices.service";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 
@@ -16,17 +16,17 @@ export default function OfficeSelector({ onChange }: Props) {
     const [userLocation, setUserLocation] = useState<{ lat: number; lon: number } | null>(null);
     const [selectedOfficeId, setSelectedOfficeId] = useState<string | null>(null);
 
-    const prefOffice = useSelector((state: RootState) => state.user.prefferedOffice);
+    const prefOffice = useSelector((state: RootState) => state.auth.user?.office);
 
-    // Obtener oficinas
+    
     useEffect(() => {
-        fetchOffices()
+        getOffices()
             .then((data) => setOffices(data))
             .catch((err) => setError(err.message))
             .finally(() => setLoading(false));
     }, []);
 
-    // Obtener ubicación del usuario
+    
     useEffect(() => {
         if (!navigator.geolocation) return;
 
@@ -35,13 +35,12 @@ export default function OfficeSelector({ onChange }: Props) {
         });
     }, []);
 
-    // Calcular distancia simple
     const distance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
         return Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lon2 - lon1, 2));
     };
 
-    // Ordenar oficinas según criterios
-    const sortedOffices = [...offices].sort((a, b) => {
+    const sortedOffices = useMemo(() => {
+    return [...offices].sort((a, b) => {
         if (userLocation) {
             const distA = distance(userLocation.lat, userLocation.lon, a.latitude, a.longitude);
             const distB = distance(userLocation.lat, userLocation.lon, b.latitude, b.longitude);
@@ -49,11 +48,11 @@ export default function OfficeSelector({ onChange }: Props) {
         }
         return a.name.localeCompare(b.name);
     });
+}, [offices, userLocation]);
 
-    // Selección inicial
     useEffect(() => {
         if (!loading && sortedOffices.length > 0) {
-            const officeToSelect = prefOffice?._id || sortedOffices[0]._id;
+            const officeToSelect = prefOffice || sortedOffices[0]._id;
             setSelectedOfficeId(officeToSelect);
             onChange(officeToSelect);
         }

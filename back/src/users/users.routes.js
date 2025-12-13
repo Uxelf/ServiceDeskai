@@ -8,7 +8,7 @@ import { requireAdminRole, requireAuth } from "../auth/auth.js";
 const router = Router();
 
 router.get("/", getUsers);
-router.post("/create", requireAuth, requireAdminRole, validate(userSchema), createUser);
-router.patch("/update", requireAuth, validate(updateUserSchema), updateUser)
+router.post("/", requireAuth, requireAdminRole, validate(userSchema), createUser);
+router.patch("/", requireAuth, validate(updateUserSchema), updateUser)
 
 export default router;

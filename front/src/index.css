@@ -6,6 +6,8 @@
     --color-app-background: #FFFCF2;
     --color-app-background-secondary: #CCC5B9;
     --color-app-highlight: #EB5E28;
+
+    --color-app-white: #FFFCF2;
 }
 
 
@@ -18,7 +20,6 @@
     --color-app-background: #FFFCF2;
     --color-app-background-secondary: #CCC5B9;
     --color-app-highlight: #EB5E28;
-
 }
 
 html.dark {
@@ -36,6 +37,14 @@ body {
 
 h1 {
     @apply text-2xl font-semibold;
+}
+
+h2 {
+    @apply text-xl font-medium;
+}
+
+h3 {
+    @apply font-bold;
 }
 
 select option:hover {

@@ -10,7 +10,7 @@ export const userSchema = z.object({
 }).strict();
 
 export const updateUserSchema = z.object({
-    name: z.string().min(1).optional(),
-    surname: z.string().min(1).optional(),
-    office: z.string().min(1).optional()
+    name: z.string().optional(),
+    surname: z.string().optional(),
+    office: z.string().optional()
 }).strict();

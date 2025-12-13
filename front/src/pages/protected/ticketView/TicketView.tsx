@@ -1,65 +1,108 @@
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import type { Ticket } from "../../../types/ticket.types";
+import { getTicketByIdApi } from "../../../services/tickets.service";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
+import Button from "../../../components/Button";
+import TicketChatHistory from "./TicketChatHistory";
+import TicketAddMessage from "./TicketAddMessage";
 
 export default function TicketView(){
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const userRole = useSelector((state: RootState) => state.auth.user?.role);
 
-  const [searchParams] = useSearchParams();
-  const ticketId = searchParams.get("id"); // asume ?id=123
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    if (!ticketId) {
+    if (!id) {
       setError("Empty Ticket ID.");
       setLoading(false);
       return;
     }
 
-    const fetchTicket = async () => {
-      try {
-        const res = await fetch(`/api/ticket/${ticketId}`);
-        if (!res.ok) throw new Error("Error al obtener el ticket");
-        const data: Ticket = await res.json();
-        setTicket(data);
-      } catch (err: any) {
-        setError(err.message || "Error desconocido");
-      } finally {
-        setLoading(false);
-      }
+    getTicketByIdApi(id)
+    .then(data => {
+      setTicket(data)
+    }).
+    then(_ => {setLoading(false)})
+  }, [id]);
+
+  const statusClasses: Record<string, string> = {
+        "open": "text-app-primary",
+        "assigned": "text-app-primary",
+        "in progress": "text-app-highlight",
+        "closed": "text-app-primary",
     };
 
-    fetchTicket();
-  }, [ticketId]);
-
-  if (loading) return <p className="text-gray-500">Cargando ticket...</p>;
+  if (loading) return <p className="text-app-secondary">Cargando ticket...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
   if (!ticket) return null;
 
+  const handleDeskButton = () => {
+    if (userRole !== "desk")
+      return;
+    console.log("Change status")
+  }
+
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-4">
-      <h1 className="text-2xl font-bold">{ticket.title}</h1>
-      <p className="text-gray-600">{ticket.description}</p>
-
-      {ticket.imageUrl && (
-        <img
-          src={ticket.imageUrl}
-          alt={ticket.title}
-          className="w-full max-h-96 object-cover rounded-md"
-        />
-      )}
-
-      <div className="flex justify-between text-sm text-gray-500">
-        <span>ID: {ticket.id}</span>
-        <span>Office: {ticket.office}</span>
+    <div className="flex flex-col max-w-3xl mx-auto px-4 pt-4 h-full absolute inset-0">
+      <div className="flex flex-col pb-4 border-b border-app-background-secondary">
+        <h1>Ticket - {ticket.title}</h1>
+        <h2 className="">id: {ticket._id}</h2>
       </div>
-
-      <div className="flex justify-between text-sm text-gray-700">
-        <span>Status: {ticket.status}</span>
-        <span>Author: {ticket.author || "N/A"}</span>
-        <span>Assigned: {ticket.assigned || "N/A"}</span>
+      <div className="flex-1 border relative">
+        <div className="flex flex-col h-full gap-4 p-2 overflow-auto absolute inset-0">
+          <div>
+            <h3>Status</h3>
+            <div className={`text-sm ${statusClasses[ticket.status]}`}>{ticket.status}</div>
+          </div>
+          <div>
+            <h3>Office</h3>
+            <div>{ticket.office}</div>
+          </div>
+          {userRole === "admin" &&
+            <>
+              <div>
+                <h3>Created by</h3>
+                <div>{ticket.author}</div>
+              </div>
+              <div>
+                <h3>Assigned to</h3>
+                <div>{ticket.assigned}</div>
+              </div>
+            </>
+          }
+          <div>
+            <h3>Description</h3>
+            <div>{ticket.description}</div>
+          </div>
+          <div>
+            <img
+              src={ticket.imageUrl}
+              alt="Preview"
+              className="max-w-full max-h-full object-cover rounded border border-app-background-secondary"
+            />
+          </div>
+          {userRole === "desk" && 
+            <Button onClick={handleDeskButton}>{ticket.status === "assigned" ? "Start work" : "Close ticket"}</Button>
+          }
+          {ticket.status !== "open" && ticket.status !== "assigned" &&
+            <div>
+              <h3>Chat</h3>
+              <TicketChatHistory chats={ticket.chats}/>
+              {ticket.status !== "closed" &&
+                <TicketAddMessage />
+              }
+            </div>
+            
+          }
+        </div>
+      
+        
       </div>
     </div>
   );

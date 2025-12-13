@@ -4,8 +4,16 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-    message: string,
     username: string,
     role: string,
-    prefferedOffice: string
+    office: string,
+    name?: string,
+    surname?: string
+}
+
+export interface LogoutRequest {
+}
+
+export interface LogoutResponse {
+    message: string
 }

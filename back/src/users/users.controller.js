@@ -31,7 +31,7 @@ export async function createUser(req, res) {
 export async function updateUser(req, res){
     try{
         if (req.body.office){
-            const office = await db.collection(officesCollection).findOne({name: req.body.office});
+            const office = await db.collection(officesCollection).findOne({_id: new ObjectId(req.body.office)});
             if (!office){
                 return res.status(400).json({error: "Office not found"});
             }
@@ -44,8 +44,16 @@ export async function updateUser(req, res){
                 }
             }
         );
-        
-        res.json({message: "User data updated"});
+        if (!result)
+            throw("Error");
+        const user = await db.collection(usersCollection).findOne({username: req.user.username });
+        res.json({
+            username: user.username,
+            role: user.role,
+            office: user.office,
+            name: user.name,
+            surname: user.surname
+        });
     } catch (err){
         res.status(500).json({error: "Error updating user data"});
     }

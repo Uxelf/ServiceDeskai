@@ -27,7 +27,7 @@ export default function PhotoUpload({ name, onFileSelect }: Props){
     <div className="flex flex-col absolute inset-0 w-full h-full items-center space-y-2">
       <label
         htmlFor={name}
-        className="font-semibold cursor-pointer bg-app-highlight text-app-primary px-4 py-2 rounded hover:bg-app-highlight/50 transition"
+        className="font-semibold cursor-pointer bg-app-highlight text-app-white px-4 py-2 rounded hover:bg-app-highlight/50 transition"
       >
         Upload photo
       </label>

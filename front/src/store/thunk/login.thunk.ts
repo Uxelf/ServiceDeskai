@@ -3,15 +3,14 @@ import { type LoginResponse, type LoginRequest } from "../../types/auth.types";
 import { loginApi } from "../../services/auth.service";
 
 
-export const loginThunk = createAsyncThunk<
+export const login = createAsyncThunk<
     LoginResponse,
     LoginRequest,
     { rejectValue: string }
->("auth/login", async (credentials, { rejectWithValue }) => {
+>("auth/login", async (data, { rejectWithValue }) => {
     try {
-        return await loginApi(credentials);
-    } catch {
-        return rejectWithValue("Credenciales incorrectas");
+        return await loginApi(data);
+    } catch (err) {
+        return rejectWithValue("Invalid user or password");
     }
-}
-)
+});

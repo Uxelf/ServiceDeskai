@@ -4,7 +4,6 @@ export const ticketSchema = z.object({
     title: z.string().min(4, "Title required"),
     description: z.string().min(4, "Description required"),
     office: z.string().min(1, "Office required"),
-    location: z.string().min(1, "Location required"),
     // Imagen
 }).strict();
 

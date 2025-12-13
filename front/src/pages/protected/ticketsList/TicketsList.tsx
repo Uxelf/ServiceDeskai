@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import TicketCard from "./TicketCard";
 import type { Ticket } from "../../../types/ticket.types";
+import { getTicketsApi } from "../../../services/tickets.service";
 
 export default function TicketsList(){
 
@@ -10,26 +11,12 @@ export default function TicketsList(){
     const [tickets, setTickets] = useState<Ticket[]>([]);
 
     useEffect(() => {
-        
-        let openTickets : Ticket[] = [];
-        for (let i = 0; i < 20; i++){
-            let openTicket : Ticket = {id: i, description: "", imageUrl: "", office: "", status: "open", title: "Title"};
-            openTickets.push(openTicket);
-        }
-
-        openTickets[0].status = "in progress";
-        openTickets[1].status = "assigned";
-        openTickets[2].status = "assigned";
-
-        let closedTickets : Ticket[] = [];
-        for (let i = 0; i < 10; i++){
-            let closedTicket : Ticket = {id: i, description: "", imageUrl: "", office: "", status: "closed", title: "Title"};
-            closedTickets.push(closedTicket);
-        }
-
-        setOpenTickets(openTickets);
-        setClosedTickets(closedTickets);
-        setTickets(openTickets);
+        getTicketsApi()
+        .then((data) => {
+            setTickets(data);
+            setOpenTickets(data.filter(ticket => ticket.status != "closed"))
+            setClosedTickets(data.filter(ticket => ticket.status === "closed"))
+        })
     },
     []);
 
@@ -57,8 +44,8 @@ export default function TicketsList(){
                 <div className="absolute inset-0 flex flex-col h-full overflow-auto px-4">
                     {tickets.map((ticket, index) => (
                         <TicketCard 
-                        key={'ticket_' + ticket.id} 
-                        id={ticket.id}
+                        key={'ticket_' + ticket._id} 
+                        id={ticket._id}
                         title={ticket.title}
                         status={ticket.status}
                         isLast={index === tickets.length - 1}/>

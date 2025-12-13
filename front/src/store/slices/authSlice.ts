@@ -1,13 +1,17 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { LoginRequest, LoginResponse } from "../../types/auth.types";
-import { loginApi } from '../../services/auth.service'
+import { createSlice } from "@reduxjs/toolkit";
+import { login } from "../thunk/login.thunk";
+import { logout as logoutThunk } from "../thunk/logout.thunk";
+import { checkAuth } from "../thunk/checkAuth.thunk";
+import { updateProfile } from "../thunk/updateProfile.thunk";
 
 interface AuthState {
     isAuthenticated: boolean;
     user: {
         username: string;
         role: string;
-        prefferedOffice: string;
+        office: string;
+        name?: string;
+        surname?: string;
     } | null;
     loading: boolean;
     error: string | null;
@@ -20,18 +24,6 @@ const initialState: AuthState = {
     error: null,
 };
 
-export const login = createAsyncThunk<
-    LoginResponse,
-    LoginRequest,
-    { rejectValue: string }
->("auth/login", async (data, { rejectWithValue }) => {
-    try {
-        return await loginApi(data);
-    } catch (err) {
-        return rejectWithValue("Invalid user or password");
-    }
-});
-
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -42,6 +34,7 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // === login ===
             .addCase(login.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -52,7 +45,46 @@ const authSlice = createSlice({
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload ?? "Error desconocido";
+                state.error = action.payload ?? "Unknow error";
+            })
+            // === logout ===
+            .addCase(logoutThunk.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(logoutThunk.fulfilled, (state, _) => {
+                state.loading = false;
+                state.user = null;
+            })
+            .addCase(logoutThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload ?? "Unknow error";
+            })
+            // === checkAuth ===
+            .addCase(checkAuth.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(checkAuth.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(checkAuth.rejected, (state) => {
+                state.loading = false;
+                state.user = null;
+            })
+            // === updateProfile ===
+            .addCase(updateProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload ?? "Error updating";
             });
     },
 });

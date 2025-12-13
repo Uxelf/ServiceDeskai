@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../store/slices/authSlice";
+import { login } from "../../store/thunk/login.thunk";
 
 export default function LoginForm(){
     const dispatch = useDispatch<AppDispatch>();
@@ -55,6 +55,6 @@ export default function LoginForm(){
                 />
                 <Button className="mx-auto" disabled={loading}>Log in</Button>
                 {(error || manualError) && <p className="absolute w-full bottom-0 left-0 text-center mt-2 text-red-600">{error? error : manualError}</p>}
-            </form>
+        </form>
     )
 }

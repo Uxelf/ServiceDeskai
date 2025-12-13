@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Office } from "../types/office.types";
 import api from "./api";
 
-export async function fetchOffices(): Promise<Office[]> {
+export async function getOffices(): Promise<Office[]> {
     try {
         const response = await api.get<Office[]>('/offices');
 
