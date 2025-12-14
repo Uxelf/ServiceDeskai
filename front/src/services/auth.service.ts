@@ -3,7 +3,7 @@ import type { LoginRequest, LoginResponse, LogoutResponse } from "../types/auth.
 import api from "./api";
 
 
-export async function loginApi(
+export async function LoginApi(
     data: LoginRequest
 ): Promise<LoginResponse> {
     try {
@@ -26,7 +26,7 @@ export async function loginApi(
     }
 }
 
-export async function checkAuthApi(): Promise<LoginResponse> {
+export async function CheckAuthApi(): Promise<LoginResponse> {
     try {
         const response = await api.get<LoginResponse>("/auth/me");
         return response.data;
@@ -42,7 +42,7 @@ export async function checkAuthApi(): Promise<LoginResponse> {
     }
 }
 
-export async function logoutApit(): Promise<LogoutResponse> {
+export async function LogoutApit(): Promise<LogoutResponse> {
     try {
         const response = await api.post('/auth/logout');
         return response.data;

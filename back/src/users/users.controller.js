@@ -17,12 +17,9 @@ export async function getUsers(req, res) {
 export async function createUser(req, res) {
     try {
         const hashedPassword = await hashPassword(req.body.password);
-        const result = await db.collection(usersCollection).insertOne({
-            username: req.body.username,
-            password: hashedPassword,
-            role: req.body.role
-        });
-        res.status(201).json({ id: result.insertedId });
+        const userToInsert = {...req.body, password: hashedPassword};
+        const result = await db.collection(usersCollection).insertOne(userToInsert);
+        res.status(201).json({ message: "User created" });
     } catch (err) {
         res.status(500).json({ error: "Error creating User" });
     }

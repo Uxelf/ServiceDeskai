@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../../../components/Button";
 import OfficeSelector from "../../../components/OfficeSelector";
 import PhotoUpload from "../../../components/PhotoUpload";
-import { uploadTicketApi } from "../../../services/tickets.service";
+import { UploadTicketApi } from "../../../services/tickets.service";
 import { useNavigate } from "react-router-dom";
 
 export default function UploadPage(){
@@ -23,7 +23,7 @@ export default function UploadPage(){
         formData.append("office", selectedOfficeId);
         formData.append("image", photo);
 
-        uploadTicketApi(formData)
+        UploadTicketApi(formData)
         .then(() => navigator("/tickets"))
         .catch((error) => {
             console.error(error);

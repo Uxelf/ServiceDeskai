@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
 import { officesCollection } from "./offices/offices.controller.js";
+import { usersCollection } from "./users/users.controller.js";
 
 const DATABASE_USERNAME = process.env.MONGO_INITDB_ROOT_USERNAME;
 const DATABASE_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD;
@@ -18,6 +19,11 @@ export async function connectDB() {
 
     await db.collection(officesCollection).createIndex(
       { name: 1 },
+      { unique: true }
+    );
+    
+    await db.collection(usersCollection).createIndex(
+      { username: 1 },
       { unique: true }
     );
   } catch (err) {

@@ -11,3 +11,15 @@ export interface UserUpdateResponse {
     name?: string,
     surname?: string
 }
+
+export interface CreateUserRequest {
+    username: string;
+    password: string;
+    role: "standard" | "desk";
+    name?: string;
+    surname?: string;
+}
+
+export interface CreateUserResponse {
+    message: string;
+}

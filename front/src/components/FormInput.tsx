@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface FormInputProps {
   label?: string;
   type?: "text" | "password" | "email";

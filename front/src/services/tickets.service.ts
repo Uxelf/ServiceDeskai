@@ -3,7 +3,7 @@ import { type UploadTicketResponse, type Ticket } from "../types/ticket.types";
 import api from "./api";
 
 
-export async function uploadTicketApi(formData: FormData) {
+export async function UploadTicketApi(formData: FormData) {
     console.log("Enviando ticket");
     try {
         const response = await api.post<UploadTicketResponse>('/tickets', formData);
@@ -18,7 +18,7 @@ export async function uploadTicketApi(formData: FormData) {
     }
 }
 
-export async function getTicketsApi() {
+export async function GetUserTicketsApi() {
     try {
         const response = await api.get<Ticket[]>('/tickets/my-tickets');
         return response.data;
@@ -33,7 +33,7 @@ export async function getTicketsApi() {
     }
 }
 
-export async function getTicketByIdApi(id: string) {
+export async function GetTicketByIdApi(id: string) {
     try {
         const response = await api.get<Ticket>(`/tickets/${id}`);
         return response.data;
@@ -41,6 +41,36 @@ export async function getTicketByIdApi(id: string) {
         if (axios.isAxiosError(error)) {
             throw new Error(
                 error.response?.data?.message || "Error getting ticket"
+            );
+        }
+
+        throw new Error("Unexpected error");
+    }
+}
+
+export async function GetOfficeTicketsApi() {
+    try {
+        const response = await api.get<Ticket[]>('/tickets/office');
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(
+                error.response?.data?.message || "Error getting tickets"
+            );
+        }
+
+        throw new Error("Unexpected error");
+    }
+}
+
+export async function GetAllTicketsApi() {
+    try {
+        const response = await api.get<Ticket[]>('/tickets/');
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(
+                error.response?.data?.message || "Error getting tickets"
             );
         }
 

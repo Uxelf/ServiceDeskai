@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
 import TicketCard from "./TicketCard";
 import type { Ticket } from "../../../types/ticket.types";
-import { getTicketsApi } from "../../../services/tickets.service";
+import { GetAllTicketsApi, GetOfficeTicketsApi, GetUserTicketsApi } from "../../../services/tickets.service";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
 
 export default function TicketsList(){
 
@@ -9,9 +11,16 @@ export default function TicketsList(){
     const [openTickets, setOpenTickets] = useState<Ticket[]>([]);
     const [closedTickets, setClosedTickets] = useState<Ticket[]>([]);
     const [tickets, setTickets] = useState<Ticket[]>([]);
+    const userRole = useSelector((state: RootState) => state.auth.user?.role);
 
     useEffect(() => {
-        getTicketsApi()
+        let getTickets = GetUserTicketsApi;
+        if (userRole === "desk")
+            getTickets = GetOfficeTicketsApi;
+        else if (userRole === "admin")
+            getTickets = GetAllTicketsApi;
+
+        getTickets()
         .then((data) => {
             setTickets(data);
             setOpenTickets(data.filter(ticket => ticket.status != "closed"))

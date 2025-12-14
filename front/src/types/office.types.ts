@@ -4,3 +4,8 @@ export interface Office {
     latitude: number,
     longitude: number,
 }
+
+export interface CreateOfficeRequest {
+    name: string,
+    location: string
+}

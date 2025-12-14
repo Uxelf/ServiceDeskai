@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Office } from "../types/office.types";
-import { getOffices } from "../services/offices.service";
+import { GetOffices } from "../services/offices.service";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 
@@ -20,7 +20,7 @@ export default function OfficeSelector({ onChange }: Props) {
 
     
     useEffect(() => {
-        getOffices()
+        GetOffices()
             .then((data) => setOffices(data))
             .catch((err) => setError(err.message))
             .finally(() => setLoading(false));

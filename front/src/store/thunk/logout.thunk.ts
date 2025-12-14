@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { type LogoutRequest, type LogoutResponse } from "../../types/auth.types";
-import { logoutApit } from "../../services/auth.service";
+import { LogoutApit } from "../../services/auth.service";
 
 
 export const logout = createAsyncThunk<
@@ -9,7 +9,7 @@ export const logout = createAsyncThunk<
     { rejectValue: string }
 >("auth/logout", async (_, { rejectWithValue }) => {
     try {
-        return await logoutApit();
+        return await LogoutApit();
     } catch (err) {
         return rejectWithValue("Error logging out");
     }

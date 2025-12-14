@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { type LoginResponse, type LoginRequest } from "../../types/auth.types";
-import { loginApi } from "../../services/auth.service";
+import { LoginApi } from "../../services/auth.service";
 
 
 export const login = createAsyncThunk<
@@ -9,7 +9,7 @@ export const login = createAsyncThunk<
     { rejectValue: string }
 >("auth/login", async (data, { rejectWithValue }) => {
     try {
-        return await loginApi(data);
+        return await LoginApi(data);
     } catch (err) {
         return rejectWithValue("Invalid user or password");
     }

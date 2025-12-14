@@ -2,14 +2,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Ticket } from "../../../types/ticket.types";
-import { getTicketByIdApi } from "../../../services/tickets.service";
+import { GetTicketByIdApi } from "../../../services/tickets.service";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 import Button from "../../../components/Button";
 import TicketChatHistory from "./TicketChatHistory";
 import TicketAddMessage from "./TicketAddMessage";
 import type { Office } from "../../../types/office.types";
-import { getOffices } from "../../../services/offices.service";
+import { GetOffices } from "../../../services/offices.service";
 
 export default function TicketView(){
   const [ticket, setTicket] = useState<Ticket | null>(null);
@@ -28,12 +28,12 @@ export default function TicketView(){
       return;
     }
 
-    getTicketByIdApi(id)
+    GetTicketByIdApi(id)
     .then(data => {
       setTicket(data)
     });
 
-    getOffices()
+    GetOffices()
     .then((data) => setOffices(data))
     .catch((err) => setError(err.message));
   }, [id]);

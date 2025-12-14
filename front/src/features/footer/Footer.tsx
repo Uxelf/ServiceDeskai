@@ -1,6 +1,11 @@
+import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
+import type { RootState } from "../../store/store"
 
 export default function Footer(){
+
+    const isAdmin = useSelector((state: RootState) => state.auth.user?.role) === "admin"
+
     return (
         <footer className="w-full border-t border-app-background-secondary">
             <nav className="flex flex-row justify-center gap-8 py-2">
@@ -12,6 +17,7 @@ export default function Footer(){
                     </svg>
                     <div className="w-full text-center">Tickets</div>
                 </NavLink>
+                {!isAdmin && 
                 <NavLink className="flex flex-col min-w-24 w-fit p-4 rounded-sm cursor-pointer transition-all 
                     bg-app-background hover:bg-app-background-secondary" 
                     to="/upload">
@@ -20,6 +26,17 @@ export default function Footer(){
                     </svg>
                     <div className="w-full text-center">Upload</div>
                 </NavLink>
+                }
+                {isAdmin &&
+                <NavLink className="flex flex-col min-w-24 w-fit p-4 rounded-sm cursor-pointer transition-all 
+                    bg-app-background hover:bg-app-background-secondary" 
+                    to="/create">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-auto">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <div className="w-full text-center">Create</div>
+                </NavLink>
+                }
                 <NavLink className="flex flex-col min-w-24 w-fit p-4 rounded-sm cursor-pointer transition-all 
                     bg-app-background hover:bg-app-background-secondary" 
                     to="/profile">

@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { checkAuth } from "./store/thunk/checkAuth.thunk";
 import TicketView from "./pages/protected/ticketView/TicketView";
 import Profile from "./pages/protected/profile/Profile";
+import Create from "./pages/protected/create/Create";
+import CreateUser from "./pages/protected/create/CreateUser";
+import CreateOffice from "./pages/protected/create/CreateOffice";
 
 function App() {
 
@@ -36,6 +39,9 @@ function App() {
         <Route path="/tickets/:id" element={<TicketView />} />
         <Route path="/upload" element={<UploadPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/create/user" element={<CreateUser />} />
+        <Route path="/create/office" element={<CreateOffice />} />
+        <Route path="/create" element={<Create />} />
       </Route>
       <Route path="/" element={<Navigate to="/tickets" replace/>} />
     </Routes>
