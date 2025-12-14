@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>ServiceDeskAi</title>
-</head>
-<body>
-
 <h1>ServiceDeskAi</h1>
 
 <p>ServiceDeskAi is a web application designed to streamline issue reporting through tickets. Standard users can create tickets by simply uploading a photo and selecting an office. An AI automatically generates a title and description based on the uploaded image. Desk users are assigned tickets according to their office and manage their status from "Assigned" to "In Progress" or "Closed". Admin users can create new users (Standard or Desk) and add new offices with names and geolocations.</p>
@@ -97,6 +89,3 @@ Standard users can submit tickets, and Desk users manage them.
   <li><a href="https://pollinations.ai/" target="_blank">Pollinations Image Analyzer API</a> for AI-powered image analysis.</li>
   <li>Node.js, React, MongoDB, and TailwindCSS communities.</li>
 </ul>
-
-</body>
-</html>
