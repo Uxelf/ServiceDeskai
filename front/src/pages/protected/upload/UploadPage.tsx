@@ -15,7 +15,7 @@ export default function UploadPage(){
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!photo) return;
+        if (!photo || !selectedOfficeId) return;
 
         setUploading(true);
 
@@ -40,7 +40,7 @@ export default function UploadPage(){
                 <div className="flex flex-1 w-full relative">
                     <PhotoUpload name="UploadPhoto" onFileSelect={setPhoto}></PhotoUpload>
                 </div>
-                <Button className="" type="submit" disabled={uploading}>Send</Button>
+                <Button type="submit" disabled={uploading || !photo || !selectedOfficeId}>Send</Button>
             </form>
         </div>
     )

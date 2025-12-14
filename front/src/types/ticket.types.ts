@@ -6,7 +6,8 @@ export interface Ticket {
     description: string,
     author?: string,
     assigned?: string,
-    imageUrl?: string
+    imageUrl?: string,
+    createdAt: Date
 }
 
 export interface UploadTicketRequest {

@@ -11,7 +11,7 @@ import cors from "cors"
 const app = express()
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: "http://localhost:5173", credentials: true,}));
+app.use(cors({ origin: "http://localhost:5173", credentials: true, }));
 const port = 3000;
 
 app.use("/api/tickets", ticketsRoutes);
@@ -26,8 +26,8 @@ connectDB().then(() => {
 });
 
 
- 
-//This is just for testing 
+
+//You can use this to generate a password for your env 
 /* import bcrypt from "bcrypt";
 async function hash() {
   const pass = await bcrypt.hash("admin", 10);

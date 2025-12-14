@@ -1,6 +1,6 @@
 
-export async function geocodeLocation(location){
-    const prompt = `
+export async function geocodeLocation(location) {
+  const prompt = `
 You are a geocoding API.
 
 Given a location string, return ONLY a valid JSON object with this exact format:
@@ -27,7 +27,6 @@ Location: "${location}"`;
     const text = await response.text();
 
     let data;
-    console.log(text);
     try {
       data = JSON.parse(text);
     } catch {

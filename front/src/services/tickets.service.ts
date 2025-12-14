@@ -4,7 +4,6 @@ import api from "./api";
 
 
 export async function UploadTicketApi(formData: FormData) {
-    console.log("Enviando ticket");
     try {
         const response = await api.post<UploadTicketResponse>('/tickets', formData);
         return response.data;

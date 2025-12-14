@@ -6,15 +6,6 @@ import { ticketsCollection } from "../tickets/tickets.controller.js";
 
 export const usersCollection = "users";
 
-export async function getUsers(req, res) {
-    try {
-        const users = await db.collection(usersCollection).find().toArray();
-        res.json(users);
-    } catch (err) {
-        res.status(500).json({ error: "Error getting users" });
-    }
-}
-
 export async function createUser(req, res) {
     try {
         const hashedPassword = await hashPassword(req.body.password);

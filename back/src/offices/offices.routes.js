@@ -6,7 +6,7 @@ import { requireAdminRole, requireAuth } from "../auth/auth.js";
 
 const router = Router();
 
-router.get("/", getOffices);
+router.get("/", requireAuth, getOffices);
 router.post("/", requireAuth, requireAdminRole, validate(newOfficeSchema), createOffice);
 
 

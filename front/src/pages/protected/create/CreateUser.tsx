@@ -66,7 +66,7 @@ export default function CreateUser() {
 
   return (
     <div className="absolute inset-0 p-4 w-full h-full flex flex-col gap-8">
-            <h1 className="pb-4">Create</h1>
+        <h1 className="pb-4">Create</h1>
         <form
         onSubmit={handleSubmit}
         className=""
@@ -87,9 +87,9 @@ export default function CreateUser() {
             />
 
             <div className="mb-4">
-                <label className="text-sm font-medium">Role</label>
+                <label className="font-semibold">Role</label>
                 <select
-                className="block w-full rounded-md bg-app-background border border-app-background-secondary py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className="block w-full mt-1 rounded-md bg-app-background border border-app-background-secondary py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 value={form.role}
                 onChange={(e) => updateField("role", e.target.value as UserFormData["role"])}
                 >

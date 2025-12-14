@@ -101,6 +101,10 @@ export default function TicketView(){
             <div className={`text-sm ${statusClasses[ticket.status]}`}>{ticket.status}</div>
           </div>
           <div>
+            <h3>Created at</h3>
+            <div className={`text-sm ${statusClasses[ticket.status]}`}>{ticket.createdAt.toString()}</div>
+          </div>
+          <div>
             <h3>Office</h3>
             <div>{ticketOfficeName}</div>
           </div>

@@ -27,7 +27,6 @@ export default function TicketsList(){
             setClosedTickets(data.filter(ticket => ticket.status === "closed"))
         })
         .catch((error) => {
-            console.log(error.message);
             setError(error.message);
         })
     },
