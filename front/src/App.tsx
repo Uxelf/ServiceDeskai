@@ -14,6 +14,7 @@ import Profile from "./pages/protected/profile/Profile";
 import Create from "./pages/protected/create/Create";
 import CreateUser from "./pages/protected/create/CreateUser";
 import CreateOffice from "./pages/protected/create/CreateOffice";
+import NotFound from "./pages/notFound/NotFound";
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
         <Route path="/create" element={<Create />} />
       </Route>
       <Route path="/" element={<Navigate to="/tickets" replace/>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
     }
     </>
