@@ -6,5 +6,9 @@ export const ticketSchema = z.object({
 }).strict();
 
 export const updateTicketStatusSchema = z.object({
-    status: z.enum(["open", "assigned", "in-progress", "closed"])
+    status: z.enum(["open", "assigned", "in progress", "closed"])
+}).strict();
+
+export const shareTicketSchema = z.object({
+    email: z.email()
 }).strict();

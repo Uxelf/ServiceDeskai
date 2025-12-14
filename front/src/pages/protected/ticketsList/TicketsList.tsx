@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import TicketCard from "./TicketCard";
 import type { Ticket } from "../../../types/ticket.types";
-import { GetAllTicketsApi, GetOfficeTicketsApi, GetUserTicketsApi } from "../../../services/tickets.service";
+import { GetAllTicketsApi, GetDeskTicketsApi, GetUserTicketsApi } from "../../../services/tickets.service";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 
@@ -11,23 +11,31 @@ export default function TicketsList(){
     const [openTickets, setOpenTickets] = useState<Ticket[]>([]);
     const [closedTickets, setClosedTickets] = useState<Ticket[]>([]);
     const [tickets, setTickets] = useState<Ticket[]>([]);
+    const [error, setError] = useState("");
     const userRole = useSelector((state: RootState) => state.auth.user?.role);
 
     useEffect(() => {
         let getTickets = GetUserTicketsApi;
         if (userRole === "desk")
-            getTickets = GetOfficeTicketsApi;
+            getTickets = GetDeskTicketsApi;
         else if (userRole === "admin")
             getTickets = GetAllTicketsApi;
 
         getTickets()
         .then((data) => {
-            setTickets(data);
             setOpenTickets(data.filter(ticket => ticket.status != "closed"))
             setClosedTickets(data.filter(ticket => ticket.status === "closed"))
         })
+        .catch((error) => {
+            console.log(error.message);
+            setError(error.message);
+        })
     },
     []);
+
+    useEffect(() => {
+        setTickets([...openTickets]);
+    }, [openTickets, closedTickets])
 
     function handleChooseTicketsTypes(status: "open" | "closed"){
         if (status === "open")
@@ -40,6 +48,9 @@ export default function TicketsList(){
     return (
         <div className="absolute w-full h-full flex flex-col px-4 pt-2">
 
+            {error && <p className="text-red-500">{error}</p>}
+            {!error &&
+            <>
             <div className="flex py-2 border-b border-app-background-secondary">
                 <div className={`flex-1/2 text-2xl text-center py-2 rounded-sm hover:bg-app-background-secondary transition-all cursor-pointer
                     ${selectedStatus === "open" ? "text-app-primary font-semibold" : "text-app-secondary font-normal"}`}
@@ -61,6 +72,8 @@ export default function TicketsList(){
                     ))}
                 </div>
             </div>
+            </>
+            }
         </div>
     )
 }

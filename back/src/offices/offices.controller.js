@@ -24,6 +24,14 @@ export async function createOffice(req, res) {
             });
         res.status(201).json({ id: result.insertedId });
     } catch (err) {
+        if (err?.code === 11000) {
+        const duplicatedField = Object.keys(err.keyPattern || {})[0];
+
+            return res.status(400).json({
+                error: `${duplicatedField} already exists`,
+            });
+        }
+
         res.status(500).json({ error: "Error creating office" });
     }
 }

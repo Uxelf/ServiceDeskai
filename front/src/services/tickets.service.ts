@@ -11,7 +11,7 @@ export async function UploadTicketApi(formData: FormData) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             throw new Error(
-                error.response?.data?.message || "Error uploading ticket"
+                error.response?.data?.error || "Error uploading ticket"
             );
         }
         throw new Error("Unexpected error");
@@ -25,7 +25,7 @@ export async function GetUserTicketsApi() {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             throw new Error(
-                error.response?.data?.message || "Error getting tickets"
+                error.response?.data?.error || "Error getting tickets"
             );
         }
 
@@ -40,7 +40,7 @@ export async function GetTicketByIdApi(id: string) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             throw new Error(
-                error.response?.data?.message || "Error getting ticket"
+                error.response?.data?.error || "Error getting ticket"
             );
         }
 
@@ -48,14 +48,14 @@ export async function GetTicketByIdApi(id: string) {
     }
 }
 
-export async function GetOfficeTicketsApi() {
+export async function GetDeskTicketsApi() {
     try {
-        const response = await api.get<Ticket[]>('/tickets/office');
+        const response = await api.get<Ticket[]>('/tickets/my-desk-tickets');
         return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             throw new Error(
-                error.response?.data?.message || "Error getting tickets"
+                error.response?.data?.error || "Error getting tickets"
             );
         }
 
@@ -70,7 +70,7 @@ export async function GetAllTicketsApi() {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             throw new Error(
-                error.response?.data?.message || "Error getting tickets"
+                error.response?.data?.error || "Error getting tickets"
             );
         }
 
@@ -78,4 +78,33 @@ export async function GetAllTicketsApi() {
     }
 }
 
-//export async function AddChatMessageToTicketApi(id: string, )
+export async function UpdateTicketStatusApi(id: string, status: "in progress" | "closed") {
+    try {
+        const response = await api.patch<string>('/tickets/update-status/' + id, { status: status });
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(
+                error.response?.data?.error || "Error getting tickets"
+            );
+        }
+
+        throw new Error("Unexpected error");
+    }
+}
+
+export async function ShareTicketApi(id: string, email: string) {
+    try {
+        const response = await api.post('/tickets/share/' + id, { email: email });
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(
+                error.response?.data?.error || "Error sharing tickets"
+            );
+        }
+
+        throw new Error("Unexpected error");
+    }
+}
+

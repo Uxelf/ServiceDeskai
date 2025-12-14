@@ -10,7 +10,7 @@ export async function GetOffices(): Promise<Office[]> {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             throw new Error(
-                error.response?.data?.message || "Error getting offices"
+                error.response?.data?.error || "Error getting offices"
             );
         }
 
@@ -26,7 +26,7 @@ export async function CreateOfficeApi(data: CreateOfficeRequest) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const message =
-                error.response?.data?.message ||
+                error.response?.data?.error ||
                 "Error while creating office";
 
             throw new Error(message);

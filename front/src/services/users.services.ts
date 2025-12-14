@@ -12,7 +12,7 @@ export async function UpdateUserApi(
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const message =
-                error.response?.data?.message ||
+                error.response?.data?.error ||
                 "Error updating";
 
             throw new Error(message);
@@ -29,7 +29,7 @@ export async function CreateUserApi(data: CreateUserRequest) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const message =
-                error.response?.data?.message ||
+                error.response?.data?.error ||
                 "Error while creating user";
 
             throw new Error(message);

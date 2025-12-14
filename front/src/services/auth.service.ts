@@ -16,7 +16,7 @@ export async function LoginApi(
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const message =
-                error.response?.data?.message ||
+                error.response?.data?.error ||
                 "Wrong credentials";
 
             throw new Error(message);
@@ -33,7 +33,7 @@ export async function CheckAuthApi(): Promise<LoginResponse> {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const message =
-                error.response?.data?.message ||
+                error.response?.data?.error ||
                 "Unauthorised";
             throw new Error(message);
         }
@@ -49,7 +49,7 @@ export async function LogoutApit(): Promise<LogoutResponse> {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const message =
-                error.response?.data?.message ||
+                error.response?.data?.error ||
                 "Error";
             throw new Error(message);
         }

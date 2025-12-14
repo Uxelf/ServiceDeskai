@@ -4,7 +4,7 @@ import type { RootState } from "../../store/store"
 
 export default function Footer(){
 
-    const isAdmin = useSelector((state: RootState) => state.auth.user?.role) === "admin"
+    const userRole = useSelector((state: RootState) => state.auth.user?.role);
 
     return (
         <footer className="w-full border-t border-app-background-secondary">
@@ -17,7 +17,7 @@ export default function Footer(){
                     </svg>
                     <div className="w-full text-center">Tickets</div>
                 </NavLink>
-                {!isAdmin && 
+                {userRole === "standard" && 
                 <NavLink className="flex flex-col min-w-24 w-fit p-4 rounded-sm cursor-pointer transition-all 
                     bg-app-background hover:bg-app-background-secondary" 
                     to="/upload">
@@ -27,7 +27,7 @@ export default function Footer(){
                     <div className="w-full text-center">Upload</div>
                 </NavLink>
                 }
-                {isAdmin &&
+                {userRole === "admin" &&
                 <NavLink className="flex flex-col min-w-24 w-fit p-4 rounded-sm cursor-pointer transition-all 
                     bg-app-background hover:bg-app-background-secondary" 
                     to="/create">

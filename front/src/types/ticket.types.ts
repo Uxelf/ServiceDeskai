@@ -1,9 +1,3 @@
-export interface Message {
-    author: string,
-    content: string,
-    date: string,
-}
-
 export interface Ticket {
     _id: string,
     status: "open" | "assigned" | "in progress" | "closed",
@@ -12,8 +6,7 @@ export interface Ticket {
     description: string,
     author?: string,
     assigned?: string,
-    imageUrl?: string,
-    chats?: Message[]
+    imageUrl?: string
 }
 
 export interface UploadTicketRequest {
