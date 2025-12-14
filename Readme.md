@@ -1,6 +1,9 @@
 <h1>ServiceDeskAi</h1>
 
-<p>ServiceDeskAi is a web application designed to streamline issue reporting through tickets. Standard users can create tickets by simply uploading a photo and selecting an office. An AI automatically generates a title and description based on the uploaded image. Desk users are assigned tickets according to their office and manage their status from "Assigned" to "In Progress" or "Closed". Admin users can create new users (Standard or Desk) and add new offices with names and geolocations.</p>
+<p>ServiceDeskAi is a web application designed to streamline issue reporting through tickets.</p>
+<p>Standard users can create tickets by simply uploading a photo and selecting an office. An AI automatically generates a title and description based on the uploaded image.</p> 
+<p>Desk users are assigned tickets according to their office and manage their status from "Assigned" to "In Progress" or "Closed".</p>
+<p>Admin users can create new users (Standard or Desk) and add new offices with names and geolocations.</p>
 
 <p>Offices are sorted based on proximity if geolocation permissions are granted, otherwise alphabetically. Users with a preferred office will have it pre-selected but can change it anytime.</p>
 
