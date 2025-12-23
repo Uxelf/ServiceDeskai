@@ -17,7 +17,6 @@
       <li><strong>Desk User:</strong> Receive assigned tickets, update ticket status (Assigned → In Progress → Closed).</li>
       <li><strong>Admin User:</strong> Create users, manage offices, and view all ticket reports.</li>
     </ul>
-  <img width="375" height="812" alt="login" src="https://github.com/user-attachments/assets/5890e752-d6db-4c6e-938c-919b65c7b9e7" />
   </li>
   <li><strong>Report Submission:</strong>
     <ul>
@@ -26,7 +25,6 @@
       <li>Office selection with geolocation support</li>
       <li>Track ticket history with status updates</li>
     </ul>
-    <img width="375" height="812" alt="ticket" src="https://github.com/user-attachments/assets/a0cd5259-cbec-4151-8874-9ce85bfbb8d0" />
   </li>
   <li><strong>Authentication & Security:</strong>
     <ul>
@@ -41,10 +39,11 @@
       <li>WCAG AA accessibility compliance</li>
     </ul>
   </li>
-  <img width="375" height="812" alt="profileDark" src="https://github.com/user-attachments/assets/f1a49449-4608-422c-a9c5-00b76db2f7d2" />
-  <img width="375" height="812" alt="profileLight" src="https://github.com/user-attachments/assets/397948f4-e5a7-4c10-b6f1-f7842051bc62" />
 </ul>
-
+<img width="375" height="812" alt="login" src="https://github.com/user-attachments/assets/5890e752-d6db-4c6e-938c-919b65c7b9e7" />
+<img width="375" height="812" alt="ticket" src="https://github.com/user-attachments/assets/a0cd5259-cbec-4151-8874-9ce85bfbb8d0" />
+<img width="375" height="812" alt="profileDark" src="https://github.com/user-attachments/assets/f1a49449-4608-422c-a9c5-00b76db2f7d2" />
+<img width="375" height="812" alt="profileLight" src="https://github.com/user-attachments/assets/397948f4-e5a7-4c10-b6f1-f7842051bc62" />
 <h2>Technology Stack</h2>
 <ul>
   <li><strong>Front End:</strong> React, TypeScript, Redux, TailwindCSS</li>
